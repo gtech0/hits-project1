@@ -1,0 +1,11 @@
+package com.inter.hitsproj1.repository;
+
+import com.inter.hitsproj1.entity.FacultyEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.UUID;
+
+@Repository
+public interface FacultyRepository extends JpaRepository<FacultyEntity, UUID> {
+}
