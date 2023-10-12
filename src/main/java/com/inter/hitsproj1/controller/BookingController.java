@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 @SecurityRequirement(name = "bearerAuth")
-@PreAuthorize("hasAnyRole('ADMIN', 'PROFESSOR', 'STUDENT')")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/bookings")
 @RequiredArgsConstructor
@@ -23,21 +23,23 @@ public class BookingController {
 
     private final BookingService bookingService;
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'PROFESSOR', 'STUDENT')")
     @GetMapping(produces = "application/json")
     public ResponseEntity<List<BookingGetDto>> getBookings(Authentication authentication) {
         return bookingService.getBookings(authentication.getName());
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'PROFESSOR', 'STUDENT')")
     @PostMapping(value = "/create", produces = "application/json")
     public ResponseEntity<StatusResponse> bookPlace(@RequestBody BookingCreateDto dto,
                                                     Authentication authentication) {
         return bookingService.bookPlace(dto, authentication.getName());
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'PROFESSOR', 'STUDENT')")
     @PostMapping(value = "/{bookingId}/cancel", produces = "application/json")
     public ResponseEntity<StatusResponse> cancelBooking(@PathVariable UUID bookingId,
                                                    Authentication authentication) {
         return bookingService.cancelBooking(bookingId, authentication.getName());
     }
-
 }

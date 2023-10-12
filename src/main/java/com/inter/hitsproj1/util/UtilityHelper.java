@@ -1,5 +1,9 @@
 package com.inter.hitsproj1.util;
 
+import com.inter.hitsproj1.dto.AudienceGetDto;
+import com.inter.hitsproj1.dto.BookingGetDto;
+import com.inter.hitsproj1.dto.BookingTimeslotGetDto;
+import com.inter.hitsproj1.dto.BookingUserGetDto;
 import com.inter.hitsproj1.entity.*;
 import com.inter.hitsproj1.exception.NotFoundException;
 import com.inter.hitsproj1.exception.PermissionDeniedException;
@@ -75,5 +79,33 @@ public class UtilityHelper {
                     log.error("Faculty doesn't exist");
                     return new NotFoundException("Faculty doesn't exist");
                 });
+    }
+
+    public static BookingGetDto bookingMapping(BookingLessonEntity bookedLesson) {
+        return BookingGetDto.builder()
+                .id(bookedLesson.getId())
+                .title(bookedLesson.getTitle())
+                .participationCount(bookedLesson.getParticipationCount())
+                .date(bookedLesson.getDate())
+                .audience(AudienceGetDto.builder()
+                        .id(bookedLesson.getAudience().getId())
+                        .name(bookedLesson.getAudience().getAudienceName())
+                        .build())
+                .user(BookingUserGetDto.builder()
+                        .id(bookedLesson.getUser().getId())
+                        .email(bookedLesson.getUser().getEmail())
+                        .fullName(bookedLesson.getUser().getFullName())
+                        .roles(bookedLesson.getUser().getRoles())
+                        .build())
+                .lessons(bookedLesson.getTimeslots()
+                        .stream()
+                        .map(timeslot -> BookingTimeslotGetDto.builder()
+                                .id(timeslot.getId())
+                                .lessonNumber(timeslot.getTimeslotNumber())
+                                .start(timeslot.getStartDate())
+                                .end(timeslot.getEndDate())
+                                .build())
+                        .toList())
+                .build();
     }
 }

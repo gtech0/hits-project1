@@ -18,6 +18,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/schedule")
 @RequiredArgsConstructor
 public class ScheduleController {

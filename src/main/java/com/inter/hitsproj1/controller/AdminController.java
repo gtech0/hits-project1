@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @SecurityRequirement(name = "bearerAuth")
+@CrossOrigin(origins = "*")
 @PreAuthorize("hasAnyRole('ADMIN')")
 @RestController
 @RequestMapping("/admin")

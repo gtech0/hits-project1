@@ -16,7 +16,7 @@ import java.util.UUID;
 @Repository
 public interface BookingLessonRepository extends JpaRepository<BookingLessonEntity, UUID> {
     Optional<BookingLessonEntity> findByIdAndUser(UUID id, UserEntity user);
-    Optional<BookingLessonEntity> findAllByUser(UserEntity user);
+    List<BookingLessonEntity> findAllByUser(UserEntity user);
     @Query("SELECT bl FROM BookingLessonEntity bl " +
             "WHERE :timeslot MEMBER OF bl.timeslots " +
             "AND bl.audience = :auditorium " +

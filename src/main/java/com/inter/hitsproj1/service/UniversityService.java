@@ -2,10 +2,8 @@ package com.inter.hitsproj1.service;
 
 import com.inter.hitsproj1.dto.*;
 import com.inter.hitsproj1.entity.*;
-import com.inter.hitsproj1.repository.AudienceRepository;
-import com.inter.hitsproj1.repository.FacultyRepository;
-import com.inter.hitsproj1.repository.StudentGroupRepository;
-import com.inter.hitsproj1.repository.UserRepository;
+import com.inter.hitsproj1.repository.*;
+import com.inter.hitsproj1.util.UtilityHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +23,7 @@ public class UniversityService {
     private final FacultyRepository facultyRepository;
     private final AudienceRepository audienceRepository;
     private final StudentGroupRepository groupRepository;
+    private final BookingLessonRepository bookingLessonRepository;
 
     public ResponseEntity<List<GroupDto>> getAllGroups() {
         List<StudentGroupEntity> groups = groupRepository.findAll();
@@ -88,5 +87,15 @@ public class UniversityService {
                                 group.getGroupNumber()))
                         .collect(Collectors.toList())
         );
+    }
+
+    public ResponseEntity<List<BookingGetDto>> getAllBookings() {
+        List<BookingGetDto> booking = bookingLessonRepository
+                .findAll()
+                .stream()
+                .map(UtilityHelper::bookingMapping)
+                .toList();
+
+        return ResponseEntity.ok(booking);
     }
 }

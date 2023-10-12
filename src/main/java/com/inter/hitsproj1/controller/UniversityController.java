@@ -4,15 +4,13 @@ import com.inter.hitsproj1.dto.*;
 import com.inter.hitsproj1.service.UniversityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/university")
 @RequiredArgsConstructor
 public class UniversityController {
@@ -42,5 +40,10 @@ public class UniversityController {
     @GetMapping(value = "/faculties/{facultyId}/groups", produces = "application/json")
     public ResponseEntity<List<GroupGetDto>> getAllFacultyGroups(@PathVariable UUID facultyId) {
         return universityService.getAllFacultyGroups(facultyId);
+    }
+
+    @GetMapping(value = "/bookings", produces = "application/json")
+    public ResponseEntity<List<BookingGetDto>> getAllBookings() {
+        return universityService.getAllBookings();
     }
 }
